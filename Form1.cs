@@ -8,18 +8,18 @@ namespace WinForms231226_walidacjaDanych
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            Sprawdzaj(textBoxKod1.Text);
+        {            
+            richTextBoxKod1.Text = Sprawdzaj(textBoxKod1.Text);
         }
 
         private void textBoxKod2_TextChanged(object sender, EventArgs e)
         {
-            Sprawdzaj(textBoxKod2.Text);
+            richTextBoxKod2.Text = Sprawdzaj(textBoxKod2.Text);
         }
 
-        private void Sprawdzaj(string s)
+        private string Sprawdzaj(string s)
         {
-            labelKomunikat.Text = "";
+            string bledy = "";
             if ( s != "")
             {
                 //sprawdzamy ka¿dy znak
@@ -27,13 +27,41 @@ namespace WinForms231226_walidacjaDanych
                 {
                     if (!Char.IsDigit(i))
                     {
-                        labelKomunikat.Text +=
+                        bledy +=
                             i + " nie jest cyfr¹\n";
                     }
                 }
             }
-            if (labelKomunikat.Text == "")
-                labelKomunikat.Text = "nie ma b³êdu";
+            return bledy;
+        }
+
+        private void maskedTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+            richTextBoxMaska.Text = "wprowadzony tekst: "+maskedTextBoxValidating.MaskedTextProvider;
+            richTextBoxMaska.Text += "\nmaska: " + maskedTextBoxValidating.Mask;         
+        }
+
+        private void textBoxValidating_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+            if (textBoxValidating.Text == "")
+            {
+                richTextBoxValidating.Text =
+                    "nie wyjdziesz z kontrolki zblokowana\na¿ do coœ wpiszesz";
+                e.Cancel = true;
+                return;
+            }
+            else
+            {
+                richTextBoxValidating.Text = "";
+                e.Cancel = true;
+            }
+        }
+
+        private void textBoxValidated_Validated(object sender, EventArgs e)
+        {
+
         }
     }
 }
